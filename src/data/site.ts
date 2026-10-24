@@ -11,6 +11,9 @@ export const profile = {
   cv: "/Mark_Ehab_CV.pdf",
 };
 
+// The live address of this site. Set NEXT_PUBLIC_SITE_URL on Vercel after deploying.
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+
 export const links = {
   email: "markehabalfons@gmail.com",
   emailHref: "mailto:markehabalfons@gmail.com",
@@ -135,6 +138,7 @@ export const services: { title: string; items: Service[]; ctaText: string; ctaBu
 export const contact = {
   title: "Let's work together",
   text: "Tell me about your project and I'll get back to you within 24 hours.",
+  submit: "Send message",
   sending: "Sending...",
   success: "Thanks! I'll reply soon.",
   error: "Something went wrong. Please email me directly.",

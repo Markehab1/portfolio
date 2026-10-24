@@ -1,8 +1,10 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { siteUrl } from "@/data/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,11 +17,25 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Basic title and description for now. Full SEO comes in build step 5.
+const description =
+  "Front-end developer building fast, responsive websites with React, Next.js and TypeScript. Available for freelance projects and internships.";
+
 export const metadata: Metadata = {
-  title: "Mark Ehab — Front-End Developer",
-  description:
-    "Front-end developer building fast, responsive websites with React, Next.js and TypeScript. Available for freelance projects and internships.",
+  // Turns relative links (like the share image) into full URLs.
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Mark Ehab — Front-End Developer",
+    // Other pages fill in %s, e.g. "Weather App | Mark Ehab"
+    template: "%s | Mark Ehab",
+  },
+  description,
+  openGraph: {
+    type: "website",
+    siteName: "Mark Ehab",
+    title: "Mark Ehab — Front-End Developer",
+    description,
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -44,6 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </main>
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
