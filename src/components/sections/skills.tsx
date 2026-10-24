@@ -17,7 +17,7 @@ export function Skills() {
                   {skill}
                   {/* "learning" label so it is clearly not a finished skill */}
                   {group.learning && (
-                    <span className="rounded bg-accent/10 px-1.5 py-0.5 text-xs font-medium text-accent">
+                    <span className="rounded border border-accent/40 px-1.5 py-0.5 text-xs font-medium text-accent">
                       learning
                     </span>
                   )}

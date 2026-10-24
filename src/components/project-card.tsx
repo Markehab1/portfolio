@@ -12,7 +12,7 @@ export function ProjectTag({ tag }: { tag: Project["tag"] }) {
   return (
     <span
       className={`inline-flex w-fit rounded-full px-2.5 py-0.5 text-xs font-medium ${
-        isClient ? "bg-accent/10 text-accent" : "border border-border text-muted"
+        isClient ? "border border-accent/40 text-accent" : "border border-border text-muted"
       }`}
     >
       {tag}
