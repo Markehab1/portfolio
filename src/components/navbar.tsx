@@ -51,7 +51,7 @@ export function Navbar() {
         className="mx-auto flex h-16 w-full max-w-content items-center justify-between gap-4 px-5 md:px-8"
       >
         <Link href="/" className="rounded-md font-semibold tracking-tight">
-          <span className="text-brand">{profile.name}</span>
+          <span className="text-brand motion-safe:animate-shimmer">{profile.name}</span>
         </Link>
 
         {/* Desktop links */}

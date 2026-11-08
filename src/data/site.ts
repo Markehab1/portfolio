@@ -5,7 +5,6 @@ import type { TechName } from "./tech-logos";
 
 export const profile = {
   name: "Mark Ehab",
-  initials: "ME",
   title: "Front-End Developer",
   location: "6th of October City, Egypt",
   availability: "Available for freelance work",
@@ -46,10 +45,17 @@ export const hero = {
   secondaryButton: "Download CV",
 };
 
-// Which logos appear in the hero orbit and the moving strip under it.
-export const techShowcase: { orbitOuter: TechName[]; orbitInner: TechName[]; strip: TechName[] } = {
+// Which logos appear in the hero orbit and the moving strip under it,
+// and the words that take turns in the middle of the orbit.
+export const techShowcase: {
+  orbitOuter: TechName[];
+  orbitInner: TechName[];
+  orbitWords: string[];
+  strip: TechName[];
+} = {
   orbitOuter: ["HTML5", "CSS3", "JavaScript (ES6+)", "Tailwind CSS", "Git", "Figma"],
   orbitInner: ["React", "Next.js", "TypeScript"],
+  orbitWords: ["Fast", "Responsive", "Clean", "Accessible", "Modern", "Reliable"],
   strip: [
     "HTML5",
     "CSS3",

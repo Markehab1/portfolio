@@ -30,7 +30,7 @@ export function Hero() {
             className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl"
           >
             {greeting}
-            <span className="text-brand">{profile.name}</span>
+            <span className="text-brand motion-safe:animate-shimmer">{profile.name}</span>
           </h1>
           <p className="mt-4 text-xl font-medium sm:text-2xl">{hero.subheading}</p>
           <p className="mt-4 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">

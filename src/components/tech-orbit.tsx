@@ -1,4 +1,4 @@
-import { profile, techShowcase } from "@/data/site";
+import { techShowcase } from "@/data/site";
 import type { TechName } from "@/data/tech-logos";
 import { TechLogo } from "./tech-logo";
 
@@ -53,8 +53,17 @@ export function TechOrbit() {
       />
 
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="flex size-20 items-center justify-center rounded-full bg-brand font-mono text-lg font-bold text-accent-foreground shadow-xl shadow-violet/30 sm:size-24 sm:text-xl">
-          &lt;{profile.initials}/&gt;
+        <span className="relative flex size-20 items-center justify-center rounded-full bg-brand text-[13px] font-bold text-accent-foreground shadow-xl shadow-violet/30 sm:size-24 sm:text-[15px]">
+          {/* Each word waits 2.5s for its turn. With reduced motion only the first one shows. */}
+          {techShowcase.orbitWords.map((word, index) => (
+            <span
+              key={word}
+              className={`absolute motion-safe:animate-word ${index > 0 ? "opacity-0" : ""}`}
+              style={{ animationDelay: `${index * 2.5}s` }}
+            >
+              {word}
+            </span>
+          ))}
         </span>
       </div>
     </div>

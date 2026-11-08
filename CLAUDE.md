@@ -117,6 +117,7 @@ Dark mode in Tailwind v4: add `@custom-variant dark (&:where(.dark, .dark *));` 
 - Sections fade up 16px on first scroll into view (once, 0.5s, ease-out).
 - Hover: cards lift 2–4px, buttons darken slightly.
 - Hero logos orbit and the logo strip under the hero scrolls (both pure CSS). With reduced motion both stay still and the strip becomes a static list.
+- Mark's name in the navbar and hero has the brand colors flowing through the letters. With reduced motion it is a still gradient, and the orbit circle shows only its first word.
 - Respect `prefers-reduced-motion`: no movement, only instant opacity.
 - No animation may delay the hero text from being readable.
 
@@ -142,7 +143,7 @@ Dark mode in Tailwind v4: add `@custom-variant dark (&:where(.dark, .dark *));` 
 - Text: "I turn ideas and designs into clean, responsive code with React, Next.js and TypeScript. Available for freelance projects and internships."
 - Buttons: **Hire me** (scrolls to #contact, accent) and **Download CV** (opens `/Mark_Ehab_CV.pdf`, outline)
 - Small links row: GitHub, LinkedIn, Email icons
-- Visual (no photo of Mark on the site): two rings of tech logos orbiting a gradient `<ME/>` circle (`tech-orbit.tsx`). Below the text until 1024px wide, beside it from there up. Decorative, so `aria-hidden`.
+- Visual (no photo of Mark on the site): two rings of tech logos orbiting a gradient circle where the words Fast, Responsive, Clean, Accessible, Modern and Reliable take turns (`tech-orbit.tsx`). Below the text until 1024px wide, beside it from there up. Decorative, so `aria-hidden`.
 - Under the hero: a moving strip of tech logos with their names (`tech-strip.tsx`).
 
 ### About
