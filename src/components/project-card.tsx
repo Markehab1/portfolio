@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { ArrowRightIcon, ExternalLinkIcon, GitHubIcon } from "./icons";
+import { ProjectScreenshot } from "./project-screenshot";
 import { card, chip } from "./styles";
 
 const textLink =
@@ -24,12 +24,11 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className={`${card} flex flex-col overflow-hidden`}>
       <div className="relative aspect-[16/10] border-b border-border bg-background">
-        <Image
-          src={`/projects/${project.slug}/desktop.png`}
+        <ProjectScreenshot
+          project={project}
+          view="desktop"
           alt={`Screenshot of the ${project.title} website`}
-          fill
           sizes="(min-width: 1100px) 506px, (min-width: 768px) calc(50vw - 44px), calc(100vw - 40px)"
-          className="object-cover object-top"
         />
       </div>
 

@@ -1,9 +1,9 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubIcon } from "@/components/icons";
+import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectTag } from "@/components/project-card";
 import { buttonOutline, buttonPrimary, card, chip } from "@/components/styles";
 import { projects } from "@/data/projects";
@@ -75,16 +75,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         </div>
       </header>
 
-      <div className="relative mt-12 aspect-[16/10] overflow-hidden rounded-xl border border-border bg-surface">
-        <Image
-          src={`/projects/${project.slug}/desktop.png`}
-          alt={`Desktop screenshot of the ${project.title} website`}
-          fill
-          preload
-          sizes="(min-width: 1100px) 1036px, calc(100vw - 40px)"
-          className="object-cover object-top"
-        />
-      </div>
+      <ProjectGallery project={project} />
 
       <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_300px] lg:gap-16">
         <div className="max-w-3xl space-y-12">
@@ -126,6 +117,9 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             </ul>
           </section>
 
+        </div>
+
+        <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
           <section>
             <Heading>Tech stack</Heading>
             <ul className="mt-4 flex flex-wrap gap-2">
@@ -146,21 +140,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               {project.status}
             </p>
           )}
-        </div>
-
-        {/* Mobile screenshot */}
-        <section className="lg:pt-1">
-          <Heading>On mobile</Heading>
-          <div className="relative mt-4 aspect-[390/844] w-full max-w-[280px] overflow-hidden rounded-[2rem] border-4 border-border bg-surface">
-            <Image
-              src={`/projects/${project.slug}/mobile.png`}
-              alt={`Mobile screenshot of the ${project.title} website`}
-              fill
-              sizes="280px"
-              className="object-cover object-top"
-            />
-          </div>
-        </section>
+        </aside>
       </div>
 
       <nav aria-label="Next project" className="mt-20 border-t border-border pt-8">

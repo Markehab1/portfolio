@@ -1,6 +1,8 @@
 // Captures desktop and mobile screenshots of every project's live site.
 // Run with: npm run screenshots
-// Saves to public/projects/<slug>/desktop.png and mobile.png
+// Only one project: npm run screenshots -- weather-app
+// Saves to public/projects/<slug>/desktop.png and mobile.png,
+// plus desktop-dark.png and mobile-dark.png for projects with a dark theme.
 
 import { mkdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -8,9 +10,17 @@ import { chromium } from "playwright";
 
 // Read slugs and live URLs straight from projects.ts so there is one source of truth.
 const source = await readFile(new URL("../src/data/projects.ts", import.meta.url), "utf8");
-const projects = [...source.matchAll(/slug: "([^"]+)"[\s\S]*?liveUrl: "([^"]+)"/g)].map(
-  ([, slug, liveUrl]) => ({ slug, liveUrl }),
-);
+const allProjects = source
+  .split(/(?=slug: ")/)
+  .slice(1)
+  .map((block) => ({
+    slug: block.match(/slug: "([^"]+)"/)[1],
+    liveUrl: block.match(/liveUrl: "([^"]+)"/)[1],
+    hasDarkTheme: block.includes("hasDarkTheme: true"),
+  }));
+
+const onlySlug = process.argv[2];
+const projects = onlySlug ? allProjects.filter((project) => project.slug === onlySlug) : allProjects;
 
 const viewports = [
   { name: "desktop", width: 1440, height: 900, options: {} },
@@ -36,24 +46,29 @@ for (const project of projects) {
   const folder = new URL(`../public/projects/${project.slug}/`, import.meta.url);
   await mkdir(folder, { recursive: true });
 
+  const themes = project.hasDarkTheme ? ["light", "dark"] : ["light"];
+
   for (const viewport of viewports) {
-    const context = await browser.newContext({
-      viewport: { width: viewport.width, height: viewport.height },
-      colorScheme: "light",
-      ...viewport.options,
-    });
-    const page = await context.newPage();
+    for (const theme of themes) {
+      // The live sites pick their theme from colorScheme on the first visit.
+      const context = await browser.newContext({
+        viewport: { width: viewport.width, height: viewport.height },
+        colorScheme: theme,
+        ...viewport.options,
+      });
+      const page = await context.newPage();
 
-    await page.goto(project.liveUrl, { waitUntil: "networkidle" });
-    await prepare(page, project.slug);
-    await page.waitForLoadState("networkidle");
-    await page.waitForTimeout(1000);
+      await page.goto(project.liveUrl, { waitUntil: "networkidle" });
+      await prepare(page, project.slug);
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(1000);
 
-    const file = new URL(`${viewport.name}.png`, folder);
-    await page.screenshot({ path: fileURLToPath(file) });
-    console.log(`Saved ${project.slug}/${viewport.name}.png`);
+      const fileName = `${viewport.name}${theme === "dark" ? "-dark" : ""}.png`;
+      await page.screenshot({ path: fileURLToPath(new URL(fileName, folder)) });
+      console.log(`Saved ${project.slug}/${fileName}`);
 
-    await context.close();
+      await context.close();
+    }
   }
 }
 

@@ -11,6 +11,7 @@ export type Project = {
   features: string[];
   challenges: { problem: string; solution: string }[];
   status?: string; // optional note, e.g. work in progress
+  hasDarkTheme?: boolean; // true = the live site has a dark theme, so dark screenshots exist
 };
 
 // The order here is the order on the page.
@@ -62,7 +63,9 @@ export const projects: Project[] = [
       "Loading indicator while data is fetched",
       "Different messages for an unknown city, API errors, too many requests and no internet",
       "Responsive layout that respects reduced-motion settings",
+      "Dark and light theme that remembers your choice",
     ],
+    hasDarkTheme: true,
     challenges: [
       {
         problem: "The API returns wind speed in meters per second.",
@@ -98,7 +101,9 @@ export const projects: Project[] = [
       "Visible edit button plus double-click to edit; Enter saves, Escape cancels",
       "Tasks and Completed tabs with smooth animations",
       "Data saved in localStorage, so tasks stay after a reload",
+      "Dark and light theme that remembers your choice",
     ],
+    hasDarkTheme: true,
     challenges: [
       {
         problem: "Editing by double-click alone was hidden from users.",
@@ -137,6 +142,7 @@ export const projects: Project[] = [
       "Responsive layout: the table turns into cards on small screens",
       "Data saved in localStorage",
     ],
+    hasDarkTheme: true,
     challenges: [
       {
         problem: "Keeping the total correct while the user types.",

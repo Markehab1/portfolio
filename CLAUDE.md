@@ -192,6 +192,7 @@ export type Project = {
   features: string[];
   challenges: { problem: string; solution: string }[];
   status?: string;        // optional note, e.g. work in progress
+  hasDarkTheme?: boolean; // true = the live site has a dark theme, so dark screenshots exist
 };
 ```
 
@@ -227,6 +228,8 @@ Order on the page: OZO, Weather App, To-Do List, Product Management System.
   - "Loading indicator while data is fetched"
   - "Different messages for an unknown city, API errors, too many requests and no internet"
   - "Responsive layout that respects reduced-motion settings"
+  - "Dark and light theme that remembers your choice"
+- hasDarkTheme: true
 - challenges:
   - problem: "The API returns wind speed in meters per second." solution: "Converted it to km/h (multiply by 3.6) so users see the unit they expect."
   - problem: "Every failure looked the same to the user." solution: "Checked the response status to show specific messages for 404, 401, 429 and network errors."
@@ -245,6 +248,8 @@ Order on the page: OZO, Weather App, To-Do List, Product Management System.
   - "Visible edit button plus double-click to edit; Enter saves, Escape cancels"
   - "Tasks and Completed tabs with smooth animations"
   - "Data saved in localStorage, so tasks stay after a reload"
+  - "Dark and light theme that remembers your choice"
+- hasDarkTheme: true
 - challenges:
   - problem: "Editing by double-click alone was hidden from users." solution: "Added a visible edit button and kept double-click as a shortcut."
   - problem: "Keeping the screen and saved data in sync." solution: "Updated the task list and saved it to localStorage after every change."
@@ -271,6 +276,7 @@ Order on the page: OZO, Weather App, To-Do List, Product Management System.
   - "Dark and light theme that remembers your choice"
   - "Responsive layout: the table turns into cards on small screens"
   - "Data saved in localStorage"
+- hasDarkTheme: true
 - challenges:
   - problem: "Keeping the total correct while the user types." solution: "Recalculated the total on every keystroke in the price fields."
   - problem: "Data disappeared on page reload." solution: "Saved products to localStorage and loaded them on start."
@@ -283,7 +289,7 @@ Screenshot (desktop image) on top, tag, title, summary, stack chips, and links: 
 
 ### Case-study page (`/projects/[slug]`)
 
-Use `generateStaticParams` and `generateMetadata`. Sections: back link, title + tag, summary, Live and Code buttons, desktop screenshot, Overview, My role, Features, Challenges (problem → solution), Tech stack, mobile screenshot, status note if present, and a "Next project" link at the bottom. Unknown slug → `notFound()`.
+Use `generateStaticParams` and `generateMetadata`. Sections: back link, title + tag, summary, Live and Code buttons, screenshot gallery (Desktop and Mobile views that follow the site theme), Overview, My role, Features, Challenges (problem → solution), Tech stack, status note if present, and a "Next project" link at the bottom. Unknown slug → `notFound()`.
 
 ## Features
 
@@ -320,6 +326,7 @@ Setup once: `npm i -D playwright` then `npx playwright install chromium`.
 
 Run locally with `node scripts/screenshots.mjs`. Using Playwright Chromium:
 - For each project, open `liveUrl` at 1440×900 and save `public/projects/<slug>/desktop.png`, then at 390×844 (mobile) and save `mobile.png`.
+- Projects with `hasDarkTheme: true` are also captured in dark mode as `desktop-dark.png` and `mobile-dark.png`.
 - Wait for network idle plus 1 second before each capture.
 - For the Weather App only: type `Cairo` in `#cityInput`, press Enter, and wait for the results to show before capturing.
 - Add `"screenshots": "node scripts/screenshots.mjs"` to package.json scripts.
