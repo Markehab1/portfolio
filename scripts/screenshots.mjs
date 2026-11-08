@@ -28,8 +28,52 @@ const viewports = [
   { name: "mobile", width: 390, height: 844, options: { isMobile: true, hasTouch: true, deviceScaleFactor: 2 } },
 ];
 
+// Demo data, so the screenshots show the apps in use instead of an empty screen.
+const demoData = {
+  "to-do-list": {
+    tasks: [
+      { text: "Review client feedback", completed: false },
+      { text: "Fix the mobile menu", completed: false },
+      { text: "Compress the hero images", completed: false },
+      { text: "Update the README", completed: false },
+      { text: "Deploy the new version", completed: false },
+    ],
+  },
+  "product-management-system": {
+    "cruds.nextId": 9,
+    "cruds.products.v2": [
+      { id: 1, title: "Wireless Mouse", price: 450, taxes: 63, ads: 20, discount: 30, count: 24, category: "Accessories" },
+      { id: 2, title: "Mechanical Keyboard", price: 1800, taxes: 252, ads: 60, discount: 100, count: 12, category: "Accessories" },
+      { id: 3, title: "27-inch Monitor", price: 7500, taxes: 1050, ads: 150, discount: 400, count: 6, category: "Displays" },
+      { id: 4, title: "USB-C Hub", price: 900, taxes: 126, ads: 25, discount: 50, count: 18, category: "Accessories" },
+      { id: 5, title: "Laptop Stand", price: 650, taxes: 91, ads: 20, discount: 0, count: 15, category: "Office" },
+      { id: 6, title: "Noise-Cancelling Headset", price: 3200, taxes: 448, ads: 80, discount: 200, count: 9, category: "Audio" },
+      { id: 7, title: "Webcam 1080p", price: 1400, taxes: 196, ads: 40, discount: 75, count: 11, category: "Video" },
+      { id: 8, title: "Desk Lamp", price: 520, taxes: 73, ads: 15, discount: 20, count: 20, category: "Office" },
+    ],
+  },
+};
+
 // Extra steps for sites that need input before they show anything useful.
 async function prepare(page, slug) {
+  // These apps read localStorage when they start, so save the data and reload.
+  if (demoData[slug]) {
+    await page.evaluate((data) => {
+      for (const [key, value] of Object.entries(data)) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+    }, demoData[slug]);
+    await page.reload({ waitUntil: "networkidle" });
+  }
+
+  // The product table is below the form, so scroll down to it.
+  if (slug === "product-management-system") {
+    const target = page.viewportSize().width < 600 ? ".table-wrap" : ".stats";
+    await page.locator(target).evaluate((element) => {
+      window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - 16, behavior: "instant" });
+    });
+  }
+
   if (slug === "weather-app") {
     await page.fill("#cityInput", "Cairo");
     await page.press("#cityInput", "Enter");

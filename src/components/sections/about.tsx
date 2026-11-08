@@ -1,5 +1,6 @@
 import { about } from "@/data/site";
 import { Section } from "../section";
+import { brandColors } from "../styles";
 
 export function About() {
   return (
@@ -11,10 +12,14 @@ export function About() {
           ))}
         </div>
 
-        <ul className="h-fit space-y-4 rounded-xl border border-border bg-surface p-6">
-          {about.facts.map((fact) => (
+        <ul className="relative h-fit space-y-4 overflow-hidden rounded-xl border border-border bg-surface p-6">
+          <span className="absolute inset-x-0 top-0 h-1 bg-brand" aria-hidden="true" />
+          {about.facts.map((fact, index) => (
             <li key={fact} className="flex gap-3 text-sm leading-6">
-              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <span
+                className={`mt-1.5 size-2.5 shrink-0 rounded-full ${brandColors[index % brandColors.length].bg}`}
+                aria-hidden="true"
+              />
               {fact}
             </li>
           ))}

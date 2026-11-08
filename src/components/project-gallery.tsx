@@ -20,7 +20,7 @@ export function ProjectGallery({ project }: { project: Project }) {
             onClick={() => setView(name)}
             className={`h-10 rounded-lg px-4 text-sm font-medium transition ${
               view === name
-                ? "bg-accent text-accent-foreground"
+                ? "bg-brand text-accent-foreground"
                 : "border border-border text-muted hover:text-foreground"
             }`}
           >

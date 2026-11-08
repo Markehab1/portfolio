@@ -6,16 +6,44 @@
 /* Light theme colors. Each one becomes a Tailwind class,
    e.g. --color-surface -> bg-surface, --color-muted -> text-muted. */
 @theme {
-  --color-background: #ffffff;
-  --color-surface: #f8fafc;
-  --color-border: #e5e7eb;
+  --color-background: #f7f6ff;
+  --color-surface: #ffffff;
+  --color-border: #e3e1f5;
   --color-foreground: #0f172a;
   --color-muted: #475569;
   --color-accent: #2563eb;
+  --color-violet: #7c3aed;
+  --color-pink: #c2185b;
   --color-accent-foreground: #ffffff;
 
   /* Max content width -> max-w-content */
   --container-content: 1100px;
+
+  /* Each one becomes a Tailwind class, e.g. --animate-marquee -> animate-marquee */
+  --animate-orbit-outer: orbit 48s linear infinite;
+  --animate-orbit-outer-counter: orbit-reverse 48s linear infinite;
+  --animate-orbit-inner: orbit-reverse 30s linear infinite;
+  --animate-orbit-inner-counter: orbit 30s linear infinite;
+  --animate-marquee: marquee 45s linear infinite;
+
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes orbit-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  /* The strip holds 3 identical lists, so it moves by one third of its width. */
+  @keyframes marquee {
+    to {
+      transform: translateX(calc(-100% / 3));
+    }
+  }
 }
 
 /* Fonts come from next/font variables set on <html>, so they use `inline`. */
@@ -26,13 +54,35 @@
 
 /* Dark theme: same names, new values. Every class switches automatically. */
 .dark {
-  --color-background: #0a0a0a;
-  --color-surface: #111113;
-  --color-border: #27272a;
+  --color-background: #0a0a14;
+  --color-surface: #14141f;
+  --color-border: #2b2b3d;
   --color-foreground: #f4f4f5;
   --color-muted: #a1a1aa;
   --color-accent: #60a5fa;
+  --color-violet: #a78bfa;
+  --color-pink: #f472b6;
   --color-accent-foreground: #0a0a0a;
+}
+
+/* The brand gradient. Its colors switch with the theme, like everything above. */
+@utility bg-brand {
+  background-image: linear-gradient(100deg, var(--color-accent), var(--color-violet), var(--color-pink));
+}
+
+/* Same gradient, painted inside the letters. */
+@utility text-brand {
+  background-image: linear-gradient(100deg, var(--color-accent), var(--color-violet), var(--color-pink));
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft color glows behind the hero. */
+@utility bg-aurora {
+  background-image:
+    radial-gradient(44rem 30rem at 8% 12%, color-mix(in oklab, var(--color-accent) 24%, transparent), transparent 70%),
+    radial-gradient(40rem 28rem at 92% 18%, color-mix(in oklab, var(--color-violet) 26%, transparent), transparent 70%),
+    radial-gradient(36rem 24rem at 62% 100%, color-mix(in oklab, var(--color-pink) 20%, transparent), transparent 70%);
 }
 
 @layer base {
@@ -55,6 +105,10 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-violet) 30%, transparent);
   }
 
   /* Visible accent focus ring on every interactive element (keyboard only). */

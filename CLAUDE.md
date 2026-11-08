@@ -42,7 +42,7 @@ Do not add other libraries without asking me. Brand icons (GitHub, LinkedIn, Wha
 src/
   app/
     layout.tsx              # fonts, ThemeProvider, Navbar, Footer, Analytics, metadata
-    page.tsx                # home: Hero, About, Skills, Projects, Services, Contact
+    page.tsx                # home: Hero, TechStrip, About, Skills, Projects, Services, Contact
     globals.css             # Tailwind import, @theme tokens, dark variant
     not-found.tsx
     opengraph-image.tsx     # generated share image (name + title)
@@ -59,9 +59,14 @@ src/
     reveal.tsx              # motion wrapper for scroll reveal
     project-card.tsx
     contact-form.tsx
+    project-screenshot.tsx  # shows the light or dark screenshot to match the theme
+    project-gallery.tsx     # Desktop / Mobile screenshot switcher
+    tech-logo.tsx           # one logo from data/tech-logos.ts
+    tech-orbit.tsx          # orbiting logos in the hero
     icons.tsx               # GitHub, LinkedIn, WhatsApp, Mail SVGs
     sections/
       hero.tsx
+      tech-strip.tsx
       about.tsx
       skills.tsx
       projects.tsx
@@ -70,8 +75,8 @@ src/
   data/
     site.ts                 # profile, links, about, skills, services
     projects.ts             # typed project list
+    tech-logos.ts           # logo shapes for skills, orbit and strip
 public/
-  avatar.jpg                # temporary photo
   Mark_Ehab_CV.pdf
   projects/<slug>/desktop.png
   projects/<slug>/mobile.png
@@ -81,18 +86,20 @@ scripts/
 
 ## Design
 
-Clean and modern: lots of white space, one accent color, strong typography, subtle motion. References: vercel.com, linear.app.
+Clean, modern and colorful: a blue → violet → pink brand gradient, soft tinted section backgrounds, strong typography, lively but subtle motion. Not a plain white page. References: vercel.com, linear.app.
 
 ### Color tokens (define in `@theme`, switch in dark mode)
 
 | Token | Light | Dark |
 | --- | --- | --- |
-| background | `#FFFFFF` | `#0A0A0A` |
-| surface (cards) | `#F8FAFC` | `#111113` |
-| border | `#E5E7EB` | `#27272A` |
+| background | `#F7F6FF` | `#0A0A14` |
+| surface (cards) | `#FFFFFF` | `#14141F` |
+| border | `#E3E1F5` | `#2B2B3D` |
 | text | `#0F172A` | `#F4F4F5` |
 | muted text | `#475569` | `#A1A1AA` |
 | accent | `#2563EB` | `#60A5FA` |
+| violet | `#7C3AED` | `#A78BFA` |
+| pink | `#C2185B` | `#F472B6` |
 | accent text on accent button | `#FFFFFF` | `#0A0A0A` |
 
 Dark mode in Tailwind v4: add `@custom-variant dark (&:where(.dark, .dark *));` in `globals.css`, and use next-themes with `attribute="class"`, `defaultTheme="system"`, `enableSystem`. Add `suppressHydrationWarning` on `<html>`.
@@ -109,6 +116,7 @@ Dark mode in Tailwind v4: add `@custom-variant dark (&:where(.dark, .dark *));` 
 
 - Sections fade up 16px on first scroll into view (once, 0.5s, ease-out).
 - Hover: cards lift 2–4px, buttons darken slightly.
+- Hero logos orbit and the logo strip under the hero scrolls (both pure CSS). With reduced motion both stay still and the strip becomes a static list.
 - Respect `prefers-reduced-motion`: no movement, only instant opacity.
 - No animation may delay the hero text from being readable.
 
@@ -134,7 +142,8 @@ Dark mode in Tailwind v4: add `@custom-variant dark (&:where(.dark, .dark *));` 
 - Text: "I turn ideas and designs into clean, responsive code with React, Next.js and TypeScript. Available for freelance projects and internships."
 - Buttons: **Hire me** (scrolls to #contact, accent) and **Download CV** (opens `/Mark_Ehab_CV.pdf`, outline)
 - Small links row: GitHub, LinkedIn, Email icons
-- Image: `/avatar.jpg` in a circle, 200px desktop, 140px mobile, using `next/image` with `priority`. The photo is temporary, so keep it easy to swap (one path in `site.ts`).
+- Visual (no photo of Mark on the site): two rings of tech logos orbiting a gradient `<ME/>` circle (`tech-orbit.tsx`). Below the text until 1024px wide, beside it from there up. Decorative, so `aria-hidden`.
+- Under the hero: a moving strip of tech logos with their names (`tech-strip.tsx`).
 
 ### About
 
@@ -156,6 +165,8 @@ Small facts next to the text:
 - **Web:** Responsive Web Design, Flexbox, CSS Grid, REST APIs, DOM Manipulation, localStorage
 - **Tools:** Git, GitHub, GitHub Pages, Vercel, npm, Figma, VS Code
 - **Learning:** Node.js, Back-End Development (show with a "learning" label so it is clearly not a finished skill)
+
+Every skill shows its logo or an icon next to its name, from `src/data/tech-logos.ts` (inline SVG, no icon library). Skills still being learned stay out of the hero orbit and logo strip.
 
 ### Services (no prices)
 
@@ -329,12 +340,13 @@ Run locally with `node scripts/screenshots.mjs`. Using Playwright Chromium:
 - Projects with `hasDarkTheme: true` are also captured in dark mode as `desktop-dark.png` and `mobile-dark.png`.
 - Wait for network idle plus 1 second before each capture.
 - For the Weather App only: type `Cairo` in `#cityInput`, press Enter, and wait for the results to show before capturing.
+- To-Do List and Product Management System are filled with demo data first, so the screenshots show the apps in use.
 - Add `"screenshots": "node scripts/screenshots.mjs"` to package.json scripts.
 
 ## Quality bar (must pass before launch)
 
 - Lighthouse 95+ in Performance, Accessibility, Best Practices and SEO, on mobile and desktop.
-- All images use `next/image` with correct `sizes`; hero image has `priority`.
+- All images use `next/image` with correct `sizes`; the main case-study screenshot has `fetchPriority="high"`.
 - Semantic HTML: one `h1`, ordered headings, `<nav>`, `<main>`, `<footer>`, labelled form fields, `alt` text on every image.
 - Color contrast meets WCAG AA in both themes.
 - Keyboard: everything reachable with Tab, visible focus, mobile menu usable with keyboard.

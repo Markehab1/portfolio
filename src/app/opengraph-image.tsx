@@ -21,7 +21,15 @@ export default function OpengraphImage() {
           color: "#F4F4F5",
         }}
       >
-        <div style={{ display: "flex", width: 120, height: 10, borderRadius: 5, background: "#60A5FA" }} />
+        <div
+          style={{
+            display: "flex",
+            width: 180,
+            height: 10,
+            borderRadius: 5,
+            backgroundImage: "linear-gradient(90deg, #60A5FA, #A78BFA, #F472B6)",
+          }}
+        />
         <div style={{ display: "flex", marginTop: 48, fontSize: 112, fontWeight: 700, letterSpacing: -3 }}>
           {profile.name}
         </div>

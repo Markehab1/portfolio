@@ -1,13 +1,14 @@
 // All personal content for the site lives here.
 // Change text in this file instead of inside the components.
 
+import type { TechName } from "./tech-logos";
+
 export const profile = {
   name: "Mark Ehab",
+  initials: "ME",
   title: "Front-End Developer",
   location: "6th of October City, Egypt",
   availability: "Available for freelance work",
-  // Temporary photo. To swap it, replace the file or change this path.
-  avatar: "/avatar.jpg",
   cv: "/Mark_Ehab_CV.pdf",
 };
 
@@ -45,6 +46,28 @@ export const hero = {
   secondaryButton: "Download CV",
 };
 
+// Which logos appear in the hero orbit and the moving strip under it.
+export const techShowcase: { orbitOuter: TechName[]; orbitInner: TechName[]; strip: TechName[] } = {
+  orbitOuter: ["HTML5", "CSS3", "JavaScript (ES6+)", "Tailwind CSS", "Git", "Figma"],
+  orbitInner: ["React", "Next.js", "TypeScript"],
+  strip: [
+    "HTML5",
+    "CSS3",
+    "JavaScript (ES6+)",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Tailwind CSS",
+    "Bootstrap",
+    "Git",
+    "GitHub",
+    "Vercel",
+    "npm",
+    "Figma",
+    "VS Code",
+  ],
+};
+
 export const about = {
   title: "About",
   paragraphs: [
@@ -61,7 +84,7 @@ export const about = {
 
 export type SkillGroup = {
   name: string;
-  skills: string[];
+  skills: TechName[];
   // true = still learning, shown with a "learning" label
   learning?: boolean;
 };

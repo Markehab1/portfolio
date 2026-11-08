@@ -3,15 +3,15 @@
 const buttonBase =
   "inline-flex h-11 items-center justify-center gap-2 rounded-lg px-5 text-sm font-medium transition";
 
-// Accent button. Hover darkens it slightly.
-export const buttonPrimary = `${buttonBase} bg-accent text-accent-foreground hover:brightness-90`;
+// Gradient button. Hover darkens it slightly.
+export const buttonPrimary = `${buttonBase} bg-brand text-accent-foreground shadow-md shadow-violet/20 hover:brightness-90`;
 
 // Outline button.
-export const buttonOutline = `${buttonBase} border border-border bg-background text-foreground hover:bg-surface hover:brightness-95`;
+export const buttonOutline = `${buttonBase} border border-border bg-surface text-foreground hover:border-violet/40 hover:brightness-95`;
 
 // Card: 12px radius, 1px border, surface background, lifts on hover (not with reduced motion).
 export const card =
-  "rounded-xl border border-border bg-surface transition duration-200 hover:shadow-md hover:shadow-black/5 motion-safe:hover:-translate-y-1";
+  "rounded-xl border border-border bg-surface transition duration-200 hover:border-violet/40 hover:shadow-lg hover:shadow-violet/10 motion-safe:hover:-translate-y-1";
 
 // Small rounded label, used for tech stack and skills.
 export const chip =
@@ -20,3 +20,10 @@ export const chip =
 // Icon-only link (GitHub, LinkedIn, ...).
 export const iconLink =
   "inline-flex size-10 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface hover:text-foreground";
+
+// The three brand colors, used in turn so repeated items don't all look the same.
+export const brandColors = [
+  { bg: "bg-accent", text: "text-accent" },
+  { bg: "bg-violet", text: "text-violet" },
+  { bg: "bg-pink", text: "text-pink" },
+];

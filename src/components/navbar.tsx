@@ -42,7 +42,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md transition-colors ${
+      className={`sticky top-0 z-50 border-b bg-background/90 backdrop-blur-md transition-colors ${
         showBorder ? "border-border" : "border-transparent"
       }`}
     >
@@ -51,7 +51,7 @@ export function Navbar() {
         className="mx-auto flex h-16 w-full max-w-content items-center justify-between gap-4 px-5 md:px-8"
       >
         <Link href="/" className="rounded-md font-semibold tracking-tight">
-          {profile.name}
+          <span className="text-brand">{profile.name}</span>
         </Link>
 
         {/* Desktop links */}
@@ -74,7 +74,7 @@ export function Navbar() {
             href={profile.cv}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden h-9 items-center rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground transition hover:brightness-90 sm:inline-flex"
+            className="hidden h-9 items-center rounded-lg bg-brand px-4 text-sm font-medium text-accent-foreground transition hover:brightness-90 sm:inline-flex"
           >
             Download CV
           </a>
@@ -112,7 +112,7 @@ export function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="flex h-10 items-center justify-center rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground transition hover:brightness-90"
+              className="flex h-10 items-center justify-center rounded-lg bg-brand px-4 text-sm font-medium text-accent-foreground transition hover:brightness-90"
             >
               Download CV
             </a>

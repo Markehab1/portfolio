@@ -4,14 +4,17 @@ import { buttonPrimary, card } from "../styles";
 
 export function Services() {
   return (
-    <Section id="services" title={services.title}>
+    <Section id="services" title={services.title} tint="pink">
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {services.items.map((service, index) => (
           <li key={service.title} className={`${card} p-6`}>
-            <span className="font-mono text-sm text-accent" aria-hidden="true">
+            <span
+              className="inline-flex size-10 items-center justify-center rounded-lg bg-brand font-mono text-sm font-semibold text-accent-foreground"
+              aria-hidden="true"
+            >
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3 className="mt-3 text-lg font-semibold tracking-tight">{service.title}</h3>
+            <h3 className="mt-4 text-lg font-semibold tracking-tight">{service.title}</h3>
             <p className="mt-2 text-sm leading-6 text-muted">{service.description}</p>
           </li>
         ))}

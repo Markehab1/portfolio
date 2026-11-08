@@ -10,7 +10,8 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border">
+    <footer>
+      <div className="h-0.5 bg-brand" aria-hidden="true" />
       <div className="mx-auto flex w-full max-w-content flex-col items-center gap-4 px-5 py-8 sm:flex-row sm:justify-between md:px-8">
         <p className="text-sm text-muted">
           © {profile.name} · {profile.title}

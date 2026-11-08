@@ -6,7 +6,7 @@ import { buttonOutline } from "../styles";
 
 export function Contact() {
   return (
-    <Section id="contact" title={contact.title} intro={contact.text}>
+    <Section id="contact" title={contact.title} intro={contact.text} tint="blue">
       <div className="grid gap-8 md:grid-cols-[1fr_1.6fr] md:gap-12">
         <div className="flex flex-col gap-3">
           <a
